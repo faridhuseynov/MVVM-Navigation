@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using MVVM_Navigation.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,17 @@ namespace MVVM_Navigation.ViewModels
             set => Set(ref text, value);
         }
 
-        private RelayCommand sendCommand;
-        public RelayCommand SendCommand
+        private RelayCommand<string> sendCommand;
+        public RelayCommand<string> SendCommand
         {
-            get => sendCommand ?? (sendCommand = new RelayCommand(
+            get => sendCommand ?? (sendCommand = new RelayCommand<string>(
 
-                () =>
+                param =>
                 {
-                    Messenger.Default.Send(Text);
+                    if (param == "First")
+                        Messenger.Default.Send(new FirstMessage { Message = Text });
+                    else if (param == "Third")
+                        Messenger.Default.Send(new ThirdMessage { Message = Text });
                     Text = "";
                 }
                 ));

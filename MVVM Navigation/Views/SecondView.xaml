@@ -9,7 +9,9 @@
     <StackPanel>
         <Label FontSize="50">SECOND</Label>
         <TextBox FontSize="50" Text="{Binding Text,UpdateSourceTrigger=PropertyChanged}" ></TextBox>
-        <Button FontSize="50" Command="{Binding SendCommand}">SEND TO FIRST</Button>
-        <Button FontSize="50" Command="{Binding SendCommand}">SEND TO THIRD</Button>
+        <Button FontSize="50" Command="{Binding SendCommand}"
+                CommandParameter="First">SEND TO FIRST</Button>
+        <Button FontSize="50" Command="{Binding SendCommand}"
+                CommandParameter="Third">SEND TO THIRD</Button>
     </StackPanel>
 </UserControl>

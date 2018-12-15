@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using MVVM_Navigation.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace MVVM_Navigation.ViewModels
         }
         public FirstViewModel()
         {
-            Messenger.Default.Register<string>(this, msg => Message = msg);
+            Messenger.Default.Register<FirstMessage>(this, msg => Message = msg.Message);
         }
     }
 }
