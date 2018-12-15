@@ -21,6 +21,7 @@ namespace MVVM_Navigation.ViewModels
         {
             viewModels.Add("First", new FirstViewModel());
             viewModels.Add("Second", new SecondViewModel());
+            viewModels.Add("Third", new ThirdViewModel());
         }
 
         private RelayCommand<string> navigateCommand;

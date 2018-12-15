@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVVM_Navigation.ViewModels
 {
-    class FirstViewModel:ViewModelBase
+    class ThirdViewModel:ViewModelBase
     {
         private string message;
         public string Message
@@ -16,7 +16,7 @@ namespace MVVM_Navigation.ViewModels
             get => message;
             set => Set(ref message, value);
         }
-        public FirstViewModel()
+        public ThirdViewModel()
         {
             Messenger.Default.Register<string>(this, msg => Message = msg);
         }

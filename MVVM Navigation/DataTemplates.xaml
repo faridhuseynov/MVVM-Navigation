@@ -9,4 +9,7 @@
     <DataTemplate DataType="{x:Type vm:SecondViewModel}">
         <v:SecondView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ThirdViewModel}">
+        <v:ThirdView/>
+    </DataTemplate>
 </ResourceDictionary>

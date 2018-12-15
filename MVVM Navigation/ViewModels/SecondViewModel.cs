@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,19 @@ namespace MVVM_Navigation.ViewModels
             get => text;
             set => Set(ref text, value);
         }
+
+        private RelayCommand sendCommand;
+        public RelayCommand SendCommand
+        {
+            get => sendCommand ?? (sendCommand = new RelayCommand(
+
+                () =>
+                {
+                    Messenger.Default.Send(Text);
+                    Text = "";
+                }
+                ));
+        }
+
     }
 }
