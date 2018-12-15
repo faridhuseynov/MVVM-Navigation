@@ -76,6 +76,9 @@
     </Compile>
     <Compile Include="Messages\FirstMessage.cs" />
     <Compile Include="Messages\ThirdMessage.cs" />
+    <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\FirstViewModel.cs" />
     <Compile Include="ViewModels\SecondViewModel.cs" />

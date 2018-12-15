@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Messaging;
+using MVVM_Navigation.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +17,11 @@ namespace MVVM_Navigation.ViewModels
 
         public ViewModelBase CurrentPage { get => currentPage; set => Set(ref currentPage, value); }
 
-        private Dictionary<string, ViewModelBase> viewModels = new Dictionary<string, ViewModelBase>();
+        private INavigationService navigationService = new NavigationService(); 
 
         public AppViewModel()
         {
-            viewModels.Add("First", new FirstViewModel());
-            viewModels.Add("Second", new SecondViewModel());
-            viewModels.Add("Third", new ThirdViewModel());
+            Messenger.Default.Register<ViewModelBase>(this, viewModel => CurrentPage = viewModel);
         }
 
         private RelayCommand<string> navigateCommand;
@@ -31,7 +31,7 @@ namespace MVVM_Navigation.ViewModels
             get => navigateCommand ?? (navigateCommand = new RelayCommand<string>(
                 param =>
                 {
-                        CurrentPage =viewModels[param];
+
                 }
                 ));
         }
