@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MVVM_Navigation.ViewModels;
+using MVVM_Navigation.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,11 @@ namespace MVVM_Navigation
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var window = new AppView();
+            window.DataContext = new AppViewModel();
+            window.ShowDialog();
+        }
     }
 }
