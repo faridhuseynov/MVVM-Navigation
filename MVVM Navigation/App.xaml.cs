@@ -17,8 +17,10 @@ namespace MVVM_Navigation
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            var locator = new ViewModelLocator();
+
             var window = new AppView();
-            window.DataContext = new AppViewModel();
+            window.DataContext = locator.GetAppViewModel();
             window.ShowDialog();
         }
     }

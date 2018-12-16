@@ -14,27 +14,27 @@ namespace MVVM_Navigation.ViewModels
     class AppViewModel:ViewModelBase
     {
         private ViewModelBase currentPage;
-
         public ViewModelBase CurrentPage { get => currentPage; set => Set(ref currentPage, value); }
 
-        private INavigationService navigationService = new NavigationService(); 
+        private INavigationService navigationService = new NavigationService();
 
-        public AppViewModel()
+        private readonly INavigationService navigation;
+        public AppViewModel(INavigationService navigation)
         {
+
             Messenger.Default.Register<ViewModelBase>(this, viewModel => CurrentPage = viewModel);
+            this.navigation = navigation;
         }
 
         private RelayCommand<string> navigateCommand;
-
         public RelayCommand<string> NavigateCommand
         {
             get => navigateCommand ?? (navigateCommand = new RelayCommand<string>(
                 param =>
                 {
-
+                    navigation.Navigate(param);
                 }
                 ));
         }
-
     }
 }

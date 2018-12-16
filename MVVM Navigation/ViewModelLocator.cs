@@ -1,4 +1,5 @@
-﻿using MVVM_Navigation.Services;
+﻿using GalaSoft.MvvmLight;
+using MVVM_Navigation.Services;
 using MVVM_Navigation.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,19 @@ namespace MVVM_Navigation
         public ViewModelLocator()
         {
             navigationService = new NavigationService();
-            appViewModel = new AppViewModel();
+            appViewModel = new AppViewModel(navigationService);
             firstViewModel = new FirstViewModel();
-            secondViewModel = new SecondViewModel();
+            secondViewModel = new SecondViewModel(navigationService);
             thirdViewModel = new ThirdViewModel();
+
+            navigationService.Register("First", firstViewModel);
+            navigationService.Register("Second", secondViewModel);
+            navigationService.Register("Third", thirdViewModel);
+        }
+
+        public ViewModelBase GetAppViewModel()
+        {
+            return appViewModel;
         }
     }
 }
