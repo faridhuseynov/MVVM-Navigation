@@ -3,38 +3,33 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MVVM_Navigation.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
-namespace MVVM_Navigation.ViewModels
+namespace WpfAppMVVM.ViewModels
 {
-    class AppViewModel:ViewModelBase
+    class AppViewModel : ViewModelBase
     {
         private ViewModelBase currentPage;
         public ViewModelBase CurrentPage { get => currentPage; set => Set(ref currentPage, value); }
 
-        private INavigationService navigationService = new NavigationService();
-
         private readonly INavigationService navigation;
+
         public AppViewModel(INavigationService navigation)
         {
-
-            Messenger.Default.Register<ViewModelBase>(this, viewModel => CurrentPage = viewModel);
             this.navigation = navigation;
+
+            Messenger.Default.Register<ViewModelBase>(this,
+                viewModel => CurrentPage = viewModel);
         }
 
-        private RelayCommand<string> navigateCommand;
-        public RelayCommand<string> NavigateCommand
+        private RelayCommand<Type> navigateCommand;
+        public RelayCommand<Type> NavigateCommand
         {
-            get => navigateCommand ?? (navigateCommand = new RelayCommand<string>(
+            get => navigateCommand ?? (navigateCommand = new RelayCommand<Type>(
                 param =>
                 {
                     navigation.Navigate(param);
                 }
-                ));
+            ));
         }
     }
 }

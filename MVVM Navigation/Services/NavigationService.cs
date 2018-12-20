@@ -10,16 +10,34 @@ namespace MVVM_Navigation.Services
 {
     class NavigationService : INavigationService
     {
-        private Dictionary<string, ViewModelBase> viewModels = new Dictionary<string, ViewModelBase>();
+        private Dictionary<Type, ViewModelBase> viewModels = new Dictionary<Type, ViewModelBase>();
 
-        public void Navigate(string viewName)
+        public void Register<T>(ViewModelBase viewModel)
         {
-            Messenger.Default.Send(viewModels[viewName]);
+            viewModels.Add(typeof(T), viewModel);
         }
 
-        public void Register(string viewName, ViewModelBase viewModel)
+        public void Navigate<T>()
         {
-            viewModels.Add(viewName, viewModel);
+            Messenger.Default.Send(viewModels[typeof(T)]);
         }
+
+        public void Navigate(Type type)
+        {
+            Messenger.Default.Send(viewModels[type]);
+        }
+
+
+        //private Dictionary<string, ViewModelBase> viewModels = new Dictionary<string, ViewModelBase>();
+
+        //public void Navigate(string viewName)
+        //{
+        //    Messenger.Default.Send(viewModels[viewName]);
+        //}
+
+        //public void Register(string viewName, ViewModelBase viewModel)
+        //{
+        //    viewModels.Add(viewName, viewModel);
+        //}
     }
 }

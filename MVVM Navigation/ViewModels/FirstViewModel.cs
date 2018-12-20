@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 
 namespace MVVM_Navigation.ViewModels
 {
-    class FirstViewModel:ViewModelBase
+    class FirstViewModel : ViewModelBase
     {
         private string message;
-        public string Message
-        {
-            get => message;
-            set => Set(ref message, value);
-        }
+        public string Message { get => message; set => Set(ref message, value); }
+
         public FirstViewModel()
         {
-            Messenger.Default.Register<FirstMessage>(this, msg => Message = msg.Message);
+            Messenger.Default.Register<FirstMessage>(this,
+            msg =>
+            {
+                Message = msg.Message;
+            });
         }
     }
 }

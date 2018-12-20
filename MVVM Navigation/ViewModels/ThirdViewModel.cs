@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MVVM_Navigation.Messages;
+using MVVM_Navigation.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +11,35 @@ using System.Threading.Tasks;
 
 namespace MVVM_Navigation.ViewModels
 {
-    class ThirdViewModel:ViewModelBase
+    class ThirdViewModel : ViewModelBase
     {
         private string message;
-        public string Message
+        public string Message { get => message; set => Set(ref message, value); }
+
+        private readonly IMessageService messageService;
+
+        public ThirdViewModel(IMessageService messageService)
         {
-            get => message;
-            set => Set(ref message, value);
+            Messenger.Default.Register<ThirdMessage>(this,
+            msg =>
+            {
+                Message = msg.Message;
+            });
+            this.messageService = messageService;
         }
-        public ThirdViewModel()
+
+        private RelayCommand alertCommand;
+        public RelayCommand AlertCommand
         {
-            Messenger.Default.Register<ThirdMessage>(this, msg => Message = msg.Message);
+            get => alertCommand ?? (alertCommand = new RelayCommand(
+                () =>
+                {
+                    //var mService = ViewModelLocator.Container.Resolve<IMessageService>();
+                    //mService.ShowInfo("Test");
+
+                    messageService.ShowInfo(Message);
+                }
+            ));
         }
     }
 }

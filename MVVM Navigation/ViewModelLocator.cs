@@ -2,10 +2,7 @@
 using MVVM_Navigation.Services;
 using MVVM_Navigation.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MVVM_Navigation
 {
@@ -18,17 +15,45 @@ namespace MVVM_Navigation
 
         private INavigationService navigationService;
 
+        public static IContainer Container;
+
         public ViewModelLocator()
         {
-            navigationService = new NavigationService();
-            appViewModel = new AppViewModel(navigationService);
-            firstViewModel = new FirstViewModel();
-            secondViewModel = new SecondViewModel(navigationService);
-            thirdViewModel = new ThirdViewModel();
+            try
+            {
+                var config = new ConfigurationBuilder();
+                config.AddJsonFile("autofac.json");
+                var module = new ConfigurationModule(config.Build());
+                var builder = new ContainerBuilder();
+                builder.RegisterModule(module);
+                Container = builder.Build();
 
-            navigationService.Register("First", firstViewModel);
-            navigationService.Register("Second", secondViewModel);
-            navigationService.Register("Third", thirdViewModel);
+                //var builder = new ContainerBuilder();
+                //builder.RegisterType<AppViewModel>();
+                //builder.RegisterType<FirstViewModel>();
+                //builder.RegisterType<SecondViewModel>();
+                //builder.RegisterType<ThirdViewModel>();
+                //builder.RegisterType<MessageService>().As<IMessageService>();
+                ////builder.RegisterInstance<NavigationService>(new NavigationService()).As<INavigationService>();
+                //builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+                //Container = builder.Build();
+
+                navigationService = Container.Resolve<INavigationService>();
+                appViewModel = Container.Resolve<AppViewModel>();
+                firstViewModel = Container.Resolve<FirstViewModel>();
+                secondViewModel = Container.Resolve<SecondViewModel>();
+                thirdViewModel = Container.Resolve<ThirdViewModel>();
+
+                navigationService.Register<FirstViewModel>(firstViewModel);
+                navigationService.Register<SecondViewModel>(secondViewModel);
+                navigationService.Register<ThirdViewModel>(thirdViewModel);
+
+                navigationService.Navigate<FirstViewModel>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public ViewModelBase GetAppViewModel()

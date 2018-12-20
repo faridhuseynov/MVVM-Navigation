@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_Navigation.Views"
+        xmlns:vm="clr-namespace:MVVM_Navigation.ViewModels"
         mc:Ignorable="d"
         Title="AppView" Height="450" Width="400">
     <Window.Resources>
@@ -11,12 +12,10 @@
     </Window.Resources>
     <DockPanel>
         <UniformGrid Rows="1" Columns="3" DockPanel.Dock="Top">
-            <Button Command="{Binding NavigateCommand}" CommandParameter="First" FontSize="25" Content="First"></Button>
-            <Button Command="{Binding NavigateCommand}" CommandParameter="Second" FontSize="25" Content="Second"></Button>
-            <Button Command="{Binding NavigateCommand}" CommandParameter="Third" FontSize="25" Content="Third"></Button>
+            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Type vm:FirstViewModel}" FontSize="25">First</Button>
+            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Type vm:SecondViewModel}" FontSize="25">Second</Button>
+            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Type vm:ThirdViewModel}" FontSize="25">Third</Button>
         </UniformGrid>
-        <ContentControl Content="{Binding CurrentPage}">
-            
-        </ContentControl>
+        <ContentControl Content="{Binding CurrentPage}"/>
     </DockPanel>
 </Window>
